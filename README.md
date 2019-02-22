@@ -1,6 +1,6 @@
 # Adstxt
 
-**TODO: Add description**
+Ads.txt parser based on the format defined in the [v1.0.1 spec](https://iabtechlab.com/wp-content/uploads/2017/09/IABOpenRTB_Ads.txt_Public_Spec_V1-0-1.pdf).
 
 ## Installation
 
