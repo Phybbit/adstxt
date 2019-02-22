@@ -121,7 +121,7 @@ defmodule Adstxt do
          %{
            domain: clean_value(domain),
            publisher_id: clean_value(pub_id),
-           account_type: clean_value(type)
+           account_type: String.upcase(clean_value(type))
          }}
 
       _ ->
