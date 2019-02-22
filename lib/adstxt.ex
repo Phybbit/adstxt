@@ -24,7 +24,7 @@ defmodule Adstxt do
         }
 
   @doc """
-  Hello world.
+  Parse the content of an ads.txt file.
 
   ## Examples
 
@@ -56,20 +56,29 @@ defmodule Adstxt do
       }
   """
   @spec parse!(content :: String.t()) :: adstxt
-  def parse!(content) when is_bitstring(content) do
-    base = %{data: [], contacts: [], subdomain_referrals: [], errors: []}
-
-    content
-    |> String.split("\n")
-    |> Enum.map(&parse_line(String.trim(&1)))
-    |> Enum.reject(&is_nil/1)
-    |> Enum.reduce(base, fn {key, value}, acc ->
-      Map.put(acc, key, acc[key] ++ [value])
-    end)
+  def parse!(content) do
+    {:ok, res} = parse(content)
+    res
   end
 
-  def parse!(_) do
-    raise "Invalid content type, please pass a string."
+  @spec parse(content :: String.t()) :: {:ok, adstxt} | {:error, String.t()}
+  def parse(content) when is_bitstring(content) do
+    base = %{data: [], contacts: [], subdomain_referrals: [], errors: []}
+
+    result =
+      content
+      |> String.split("\n")
+      |> Enum.map(&parse_line(String.trim(&1)))
+      |> Enum.reject(&is_nil/1)
+      |> Enum.reduce(base, fn {key, value}, acc ->
+        Map.put(acc, key, acc[key] ++ [value])
+      end)
+
+    {:ok, result}
+  end
+
+  def parse(_) do
+    {:error, "Invalid content type, please pass a string."}
   end
 
   defp parse_line("#" <> _comment), do: nil

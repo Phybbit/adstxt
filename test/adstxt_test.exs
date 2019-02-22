@@ -80,6 +80,8 @@ defmodule AdstxtTest do
       subdomain_referrals: [],
       errors: []
     }
+
+    assert result == expected
   end
 
   test "4.5 SUBDOMAIN REFERRAL" do
@@ -110,5 +112,7 @@ defmodule AdstxtTest do
       subdomain_referrals: ["divisionone.example.com"],
       errors: []
     }
+
+    assert result == expected
   end
 end
